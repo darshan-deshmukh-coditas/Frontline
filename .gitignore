@@ -1,0 +1,6 @@
+/.env
+/node_modules
+/uploads
+/pnpm-lock.yaml
+/dist
+/config
