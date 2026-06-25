@@ -48,6 +48,8 @@ UserSchema.init({
             model: "companies",
             key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
     },
 
     role: {

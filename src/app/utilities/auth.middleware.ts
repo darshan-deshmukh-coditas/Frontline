@@ -10,10 +10,10 @@ export const authMiddleware = (roles: string[]) => async (req: Request, res: Res
         console.log(accessToken, refreshToken)
         if (!accessToken) throw authResponse.UNAUTHORIZED;
 
-        const {id, role, companyId, ...rest} = verifyAccessToken(accessToken)
+        const {id, role, company_id, ...rest} = verifyAccessToken(accessToken)
         verifyRefreshToken(refreshToken)
         
-        req.user = { id, role, companyId};
+        req.user = { id, role, company_id};
         console.log(req.user)
         const isAuthorized = roles.includes(req.user.role);
         console.log(roles)

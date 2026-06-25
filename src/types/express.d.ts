@@ -3,7 +3,7 @@ namespace Express {
         user: {
             id: string,
             role: string,
-            companyId: string
+            company_id: string
         }
     }
 }

@@ -12,7 +12,7 @@ companySchema.init({
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
-        defaultValue: Sequelize.fn('uuidv4')
+        defaultValue: () => randomUUID()
     },
     name: {
         type: DataTypes.TEXT,

@@ -10,7 +10,7 @@ const router = factoryRouter();
 
 router.post("/create", [Role.superAdmin], body(ZCompanyCreate), async (req, res, next) => {
     try {
-        const companyCreated = await companyService.createCompany(req.body);
+        const companyCreated = await companyService.createCompany(req.body, req.user);
         res.send(new ResponseHandler(companyCreated))
     } catch (error) {
         next(error)
@@ -19,7 +19,7 @@ router.post("/create", [Role.superAdmin], body(ZCompanyCreate), async (req, res,
 
 router.patch("/:id", [Role.superAdmin], body(ZCompanyUpdate), async (req, res, next) => { 
     try {
-        const companyUpdated = await companyService.updateCompany(req.params.id as any, req.body)
+        const companyUpdated = await companyService.updateCompany(req.params.id as any, req.body, req.user.company_id as any)
         res.send(new ResponseHandler(companyUpdated))
     } catch (error) {
         next(error)
@@ -46,7 +46,7 @@ router.get("/allCompanies", [Role.superAdmin], async(req, res, next) => {
 
 router.get("/:id", [Role.superAdmin], async(req, res, next) => {
     try {
-        const companyData = await companyService.getOneCompany(req.params.is as any);
+        const companyData = await companyService.getOneCompany(req.params.id as any);
         res.send(new ResponseHandler(companyData));
     } catch (error) {
         next(error)

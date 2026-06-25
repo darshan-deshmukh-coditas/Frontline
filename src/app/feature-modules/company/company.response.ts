@@ -36,10 +36,10 @@ export const companyResponse: Record<
   },
   COMPANY_DELETED_SUCCESSFULLY: {
     statusCode: 204,
-    message: "User deleted successfully",
+    message: "Company deleted successfully",
   },
   COMPANY_NOT_FOUND: {
     statusCode: 404,
-    message: "COmpany not found",
+    message: "Company not found",
   },
 };

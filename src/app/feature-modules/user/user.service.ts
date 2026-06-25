@@ -7,13 +7,12 @@ import { Role, type Query, type UpdateUser, type User } from "./user.types.js";
 
 
 
-const create = async (user: Omit<User, "id">, transaction?: Transaction) => {
+const create = async (user: Omit<User, "id">, authUser: authUser) => {
     try {
         const password = user.password;
         const hashedPassword = await hashPassword(password)
         user.password = hashedPassword
-        // console.log(".............................", user)
-        await userRepo.create(user, transaction);
+        await userRepo.create(user);
         return UserResponse.USER_CREATED
     } catch (e) {
         throw e

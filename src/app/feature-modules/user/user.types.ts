@@ -13,7 +13,7 @@ export const ZUser = z.object({
     name: z.string("Name must be minimum of 3 letters").min(3),
     email: z.email("email must be a valid email-id"),
     password: z.string("Password must be minimum of 8 digits").min(8),
-    companyId: z.uuid("Company-id must be a valid UUID"),
+    companyId: z.uuid("Company-id must be a valid UUID").optional(),
     role: z.enum(Role),
     passwordVersion: z.coerce.number("Password version must be a valid number.").optional()
 })
