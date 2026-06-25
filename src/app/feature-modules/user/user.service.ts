@@ -1,20 +1,22 @@
+import type { Transaction } from "sequelize";
 import { hashPassword } from "../../utilities/hash.password.js";
+import type { authUser } from "../auth/auth.types.js";
 import userRepo from "./user.repo.js";
 import { UserResponse } from "./user.response.js";
-import { Role, type authUser, type Query, type UpdateUser, type User } from "./user.types.js";
+import { Role, type Query, type UpdateUser, type User } from "./user.types.js";
 
 
 
-const create = async (user: Omit<User, "id">) => {
+const create = async (user: Omit<User, "id">, transaction?: Transaction) => {
     try {
         const password = user.password;
         const hashedPassword = await hashPassword(password)
         user.password = hashedPassword
-        console.log("User............", user)
-        await userRepo.create(user);
+        // console.log(".............................", user)
+        await userRepo.create(user, transaction);
         return UserResponse.USER_CREATED
     } catch (e) {
-        throw UserResponse.USER_CREATION_FAILED
+        throw e
     }
 }
 

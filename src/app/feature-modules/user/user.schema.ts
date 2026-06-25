@@ -1,6 +1,7 @@
 import { Model, DataTypes, type InferCreationAttributes, type InferAttributes, type CreationOptional, Sequelize } from "sequelize";
 import { sequelize } from "../../connections/pg.connection.js";
 import { Role } from "./user.types.js";
+import { randomUUID } from "crypto";
 
 export class UserSchema extends Model<InferAttributes<UserSchema>, InferCreationAttributes<UserSchema>> {
     declare id: CreationOptional<string>;
@@ -42,7 +43,11 @@ UserSchema.init({
 
     companyId: {
         type: DataTypes.UUID,
-        allowNull: true
+        allowNull: true,
+        references: {
+            model: "companies",
+            key: "id",
+        },
     },
 
     role: {

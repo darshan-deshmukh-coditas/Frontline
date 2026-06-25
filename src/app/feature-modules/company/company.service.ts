@@ -1,14 +1,21 @@
+import type { Transaction } from "sequelize";
 import companyRepo from "./company.repo.js";
 import { companyResponse } from "./company.response.js";
-import { companySchema } from "./company.schema.js";
-import type { Company } from "./company.types.js";
+import type { Company, CompanyCreate } from "./company.types.js";
+import { sequelize } from "../../connections/pg.connection.js";
+import authService from "../auth/auth.service.js";
+import { Role } from "../user/user.types.js";
 
-const createCompany = async(company: Pick<Company, "name">) => {
+const createCompany = async(data: CompanyCreate) => {
     try {
-        const companyExists = await companyRepo.findOneCompany(company);
+        const companyExists = await companyRepo.findOneCompany({name: data.companyName});
         if(companyExists) throw companyResponse.COMPANY_ALREADY_EXISTS;
-        const newCompany = await companyRepo.createCompany(company);
-        return companyResponse.COMPANY_CREATED_SUCCESSFULLY;
+        await sequelize.transaction(async (transaction: Transaction) => {
+            const company = await companyRepo.createCompany( {name: data.companyName} , transaction);
+            console.log(await getOneCompany({name: company.name}), "..............................................")
+            await authService.register({name: data.adminName, email: data.adminEmail, password: data.adminPassword, role: Role.companyAdmin, companyId: company.id}, transaction)
+        });
+        return companyResponse.COMPANY_CREATED_SUCCESSFULLY
     } catch (error) {
         throw error;
     }

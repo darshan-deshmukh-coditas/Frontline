@@ -8,25 +8,18 @@ export enum Role {
     customer = "customer"
 }
 
-export interface authUser {
-    id: string,
-    company_id: string,
-    role: string
-}
-
-
 export const ZUser = z.object({
     id: z.uuid("id must be a valid uuid."),
-    name: z.string().min(3),
+    name: z.string("Name must be minimum of 3 letters").min(3),
     email: z.email("email must be a valid email-id"),
-    password: z.string().min(8),
-    companyId: z.uuid(),
+    password: z.string("Password must be minimum of 8 digits").min(8),
+    companyId: z.uuid("Company-id must be a valid UUID"),
     role: z.enum(Role),
-    passwordVersion: z.coerce.number("Password version must be a valid number.")
+    passwordVersion: z.coerce.number("Password version must be a valid number.").optional()
 })
 
 export const ZUpdateUser = z.object({
-    name: z.string().optional(),
+    name: z.string("Name must be minimum of 3 letters").optional(),
     email: z.email('Please enter valid emailId').optional()
 }).strict()
 

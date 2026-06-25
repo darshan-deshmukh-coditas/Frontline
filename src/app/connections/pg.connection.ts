@@ -11,6 +11,7 @@ export const sequelize = new Sequelize(
 export const connectToPG = async () => {
     try{
         await sequelize.authenticate();
+        // await import('./pg.association.js')
         console.log("Connected to PG")
     }catch(e){
         console.log("Could not connect")

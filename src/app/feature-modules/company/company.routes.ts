@@ -4,11 +4,11 @@ import { ResponseHandler } from "../../utilities/response.handler.js";
 import { body } from "../../utilities/validate.js";
 import { Role } from "../user/user.types.js";
 import companyService from "./company.service.js";
-import { ZCompany, ZCompanyUpdate, type Company } from "./company.types.js";
+import { ZCompany, ZCompanyCreate, ZCompanyUpdate, type Company } from "./company.types.js";
 
 const router = factoryRouter();
 
-router.post("/create", [Role.superAdmin], body(ZCompany), async (req, res, next) => {
+router.post("/create", [Role.superAdmin], body(ZCompanyCreate), async (req, res, next) => {
     try {
         const companyCreated = await companyService.createCompany(req.body);
         res.send(new ResponseHandler(companyCreated))

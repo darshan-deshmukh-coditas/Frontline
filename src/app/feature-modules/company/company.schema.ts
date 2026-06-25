@@ -1,5 +1,6 @@
-import { DataTypes, Model, type CreationOptional, type InferAttributes, type InferCreationAttributes } from "sequelize";
+import { DataTypes, Model, Sequelize, type CreationOptional, type InferAttributes, type InferCreationAttributes } from "sequelize";
 import { sequelize } from "../../connections/pg.connection.js";
+import { randomUUID } from "crypto";
 
 export class companySchema extends Model<InferAttributes<companySchema>, InferCreationAttributes<companySchema>> {
     declare id: CreationOptional<string>;
@@ -11,7 +12,7 @@ companySchema.init({
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
-        defaultValue: sequelize.fn('uuidv4')
+        defaultValue: Sequelize.fn('uuidv4')
     },
     name: {
         type: DataTypes.TEXT,

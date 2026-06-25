@@ -1,14 +1,14 @@
 import { compare } from "bcryptjs";
 import userService from "../user/user.service.js";
-import { type authUser } from "../user/user.types.js";
 import { authResponse } from "./auth.response.js";
 import { generateAccessToken, generateRefreshToken } from "../../utilities/jwt.helper.js";
 import type { userLogin, userRegister } from "./auth.types.js";
+import type { Transaction } from "sequelize";
 
-const register = async (newUser: userRegister) => {
+const register = async (newUser: userRegister, transaction?: Transaction) => {
   try {
-    const userExists = await userService.findOne({ email: newUser.email, companyId: newUser.companyId });
-    if (userExists) throw authResponse.USER_ALREADY_EXISTS;
+    // const userExists = await userService.findOne({email: newUser.email});
+    // if (userExists) throw authResponse.USER_ALREADY_EXISTS;
     return await userService.create(newUser);
   } catch (e) {
     throw e;

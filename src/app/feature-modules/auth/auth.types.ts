@@ -1,6 +1,12 @@
 import z from "zod";
 import { ZUser } from "../user/user.types.js";
 
+export interface authUser {
+    id: string,
+    role: string
+    company_id: string,
+}
+
 export const ZUserRegister = ZUser.omit({
     id: true,
 })

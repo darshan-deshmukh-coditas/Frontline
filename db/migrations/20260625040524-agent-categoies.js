@@ -1,10 +1,11 @@
 "use strict";
 
 import { DataTypes } from "sequelize";
+
 /** @type {import('sequelize-cli').Migration} */
 export default {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("categories", {
+    await queryInterface.createTable("agent_categories", {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -12,31 +13,36 @@ export default {
         defaultValue: Sequelize.Sequelize.fn("uuidv4"),
       },
 
-      name: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-
-      companyId: {
+      agentId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: "companies",
+          model: "users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+
+      categoryId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: "categories",
           key: "id",
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
     });
-
-    await queryInterface.addConstraint("categories", {
-      fields: ["companyId", "name"],
+    await queryInterface.addConstraint("agent_categories", {
+      fields: ["agentId"],
       type: "unique",
-      name: "unique_category",
+      name: "per_agent_one_categories",
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("categories");
+    await queryInterface.dropTable("agent_categories");
   },
 };

@@ -1,8 +1,8 @@
 import type { Transaction } from "sequelize";
-import type { Company, CompanyAdminCreate } from "./company.types.js";
+import type { Company } from "./company.types.js";
 import { companySchema } from "./company.schema.js";
 
-const createCompany = (company: Pick<Company, "name">, transaction?: Transaction) => companySchema.create(company);
+const createCompany = (company: Omit<Company, "id">, transaction: Transaction) => companySchema.create(company, {transaction});
 
 const findOneCompany = (company: Partial<Company>) => companySchema.findOne({where: company})
 

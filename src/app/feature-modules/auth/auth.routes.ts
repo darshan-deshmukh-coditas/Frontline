@@ -9,7 +9,12 @@ const router = factoryRouter();
 
 router.Public().post("/login", body(ZUserLogin) ,async (req, res, next) => {
   try {
-    const { refreshToken, ...data } = await authService.login(req.body);
+    const {accessToken, refreshToken, ...data } = await authService.login(req.body);
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      maxAge: 15 * 60 * 1000,
+      sameSite: "strict",
+    });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 60 * 60 * 1000,

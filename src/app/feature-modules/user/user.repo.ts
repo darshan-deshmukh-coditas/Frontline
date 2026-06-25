@@ -1,8 +1,8 @@
-import { Op, type WhereOptions } from "sequelize";
+import { Op, Transaction, type WhereOptions } from "sequelize";
 import type { Query, UpdateUser, User } from "./user.types.js";
 import { UserSchema } from "./user.schema.js";
 
-const create = (user: Omit<User, "id">) => UserSchema.create(user);
+const create = (user: Omit<User, "id">, transaction?: Transaction) => UserSchema.create(user, {transaction: transaction ?? null});
 
 const findOne =  (user: Partial<User>) => UserSchema.findOne({ where: user });
 
