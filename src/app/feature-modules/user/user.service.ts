@@ -7,7 +7,7 @@ import { Role, type Query, type UpdateUser, type User } from "./user.types.js";
 
 
 
-const create = async (user: Omit<User, "id">, authUser: authUser) => {
+const create = async (user: Omit<User, "id">, authUser: any) => {
     try {
         const password = user.password;
         const hashedPassword = await hashPassword(password)
@@ -21,7 +21,9 @@ const create = async (user: Omit<User, "id">, authUser: authUser) => {
 
 const findOne = async (user: Partial<User>) => {
     try {
-        return await userRepo.findOne(user);
+        console.log(user)
+        const result = await userRepo.findOne(user);
+        return result
     } catch (e) {
         throw UserResponse.USER_NOT_FOUND;
     }

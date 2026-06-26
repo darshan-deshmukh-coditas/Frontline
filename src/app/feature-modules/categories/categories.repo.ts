@@ -21,7 +21,7 @@ const findOneCategory = (category: Partial<Category>) => {
 }
 
 const findById = (category: Partial<Category>) => {
-    return categorySchema.findAll({
+    return categorySchema.findOne({
     where: {
         id: category.id,
         companyId: category.companyId

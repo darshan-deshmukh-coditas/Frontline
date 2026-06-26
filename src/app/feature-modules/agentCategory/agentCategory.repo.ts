@@ -3,12 +3,17 @@ import type { AgentCategory, AgentCategoryCreate } from "./agentCategory.types.j
 
 const create = async (data : AgentCategoryCreate) => agentCategorySchema.create(data);
 
-const removeAgentById = async (agentId: Pick<AgentCategory, "agentId">) => agentCategorySchema.destroy({where: {agentId}});
+const removeAgentById = async (agentId: string) => agentCategorySchema.destroy({where: {agentId}});
 
 const countAgentInCategory = async (categoryId: Pick<AgentCategory, "categoryId">) => agentCategorySchema.count({where: {categoryId}});
 
+const findAgentById = async(agentId: string) => agentCategorySchema.findOne({where: {agentId}})
+
+const findAll = async(categoryId: string) => agentCategorySchema.findAll({where: {categoryId}})
 export default {
     create,
     removeAgentById,
-    countAgentInCategory
+    countAgentInCategory,
+    findAgentById,
+    findAll
 }

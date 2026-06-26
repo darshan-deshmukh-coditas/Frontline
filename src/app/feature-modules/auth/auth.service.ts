@@ -7,6 +7,10 @@ import type { Transaction } from "sequelize";
 
 const register = async (newUser: userRegister, authUser: authUser) => {
   try {
+    if(!authUser) {
+      const companyId = newUser.companyId
+      return await userService.create(newUser, companyId);
+    }
     const userExists = await userService.findOne({email: newUser.email});
     if (userExists) throw authResponse.USER_ALREADY_EXISTS;
     return await userService.create(newUser, authUser);
@@ -31,6 +35,7 @@ const login = async (credentials: userLogin) => {
     return {
       name: user.name,
       email: user.email,
+      role: user.role,
       accessToken,
       refreshToken
     };

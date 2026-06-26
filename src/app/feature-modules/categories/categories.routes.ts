@@ -17,8 +17,9 @@ router.post("/create", [Role.companyAdmin, Role.companyManager], body(ZCategoryC
     }
 })
 
-router.get("/all", [Role.companyAdmin, Role.companyManager], async(req, res, next) => {
+router.get("/all", [Role.companyAdmin, Role.companyAgent, Role.companyManager, Role.customer],async(req, res, next) => {
     try {
+        // console.log(req.user)
         const data = await categoriesService.getAllCategories(req.user.company_id as any);
         res.send(new ResponseHandler(data));
     } catch (error) {

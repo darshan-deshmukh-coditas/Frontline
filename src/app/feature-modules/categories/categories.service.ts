@@ -29,7 +29,6 @@ const getAllCategories = async (companyId: Pick<Category, "companyId">) => {
 
 const getOneCategory = async (companyId: string, id: string) => {
   try {
-    if(companyId !== id ) throw authResponse.UNAUTHORIZED;
     const category = await categoryRepo.findById({ id, companyId });
     if (!category) throw categoryResponse.CATEGORY_NOT_FOUND;
     return category;

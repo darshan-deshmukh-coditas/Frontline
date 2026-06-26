@@ -29,7 +29,7 @@ router.Public().post("/login", body(ZUserLogin) ,async (req, res, next) => {
 
 router.Public().post("/register", body(ZUserRegister), async (req, res, next) => {
   try {
-    const result = await authService.register(req.body, req?.user)
+    const result = await authService.register(req.body, req.user)
     res.send(new ResponseHandler(result))
   } catch (error) {
     throw error
